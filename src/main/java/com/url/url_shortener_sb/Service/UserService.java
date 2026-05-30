@@ -2,6 +2,7 @@ package com.url.url_shortener_sb.Service;
 
 import com.url.url_shortener_sb.Repository.UserRepository;
 import com.url.url_shortener_sb.dtos.LoginRequest;
+import com.url.url_shortener_sb.dtos.UrlMappingDTO;
 import com.url.url_shortener_sb.models.User;
 import com.url.url_shortener_sb.security.Jwt.JwtAuthenticationResponse;
 import com.url.url_shortener_sb.security.Jwt.JwtUtils;
@@ -10,6 +11,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -24,15 +26,19 @@ public class UserService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
-
-    public JwtAuthenticationResponse authenticationUser(LoginRequest loginRequest){
-        Authentication authentication =authenticationManager.authenticate(
+    public JwtAuthenticationResponse authenticateUser(LoginRequest loginRequest){
+        Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(),
-                loginRequest.getPassword()));
+                        loginRequest.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        UserDetailsImpl userDetails=(UserDetailsImpl) authentication.getPrincipal();
-        String jwt=jwtUtils.generateToken(userDetails);
-        return  new JwtAuthenticationResponse(jwt);
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+        String jwt = jwtUtils.generateToken(userDetails);
+        return new JwtAuthenticationResponse(jwt);
     }
 
+    public User findByUsername(String name) {
+        return userRepository.findByUsername(name).orElseThrow(
+                () -> new UsernameNotFoundException("User not found with username: " + name)
+        );
+    }
 }

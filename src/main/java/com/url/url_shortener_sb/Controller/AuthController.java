@@ -19,21 +19,18 @@ public class AuthController {
     private UserService userService;
 
     @PostMapping("/public/login")
-    public ResponseEntity<?> loginUser(@RequestBody LoginRequest request) {
-       return ResponseEntity.ok(userService.authenticationUser(request));
-
-
+    public ResponseEntity<?> loginUser(@RequestBody LoginRequest loginRequest){
+        return ResponseEntity.ok(userService.authenticateUser(loginRequest));
     }
-
 
     @PostMapping("/public/register")
     public ResponseEntity<?> registerUser(@RequestBody RegisterRequest registerRequest){
-       // System.out.println(registerRequest);
-
-        User user=new User();
+        User user = new User();
         user.setUsername(registerRequest.getUsername());
+        user.setPassword(registerRequest.getPassword());
+        user.setEmail(registerRequest.getEmail());
         user.setRole("ROLE_USER");
         userService.registerUser(user);
-        return ResponseEntity.ok("User Registered Successfully");
+        return ResponseEntity.ok("User registered successfully");
     }
 }
