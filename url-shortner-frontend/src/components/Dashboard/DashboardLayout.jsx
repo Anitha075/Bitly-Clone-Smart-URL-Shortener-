@@ -1,19 +1,24 @@
 import React, { useState } from "react";
 import Graph from "./Graph";
-import { dummyData } from "../dummyData/data";
-import { useFetchTotalClicks } from "../hooks/useQuery";
-import { useStoreContext } from "../contextApi/ContextApi";
+import { dummyData } from "../../dummyData/data";
+import { useFetchTotalClicks } from "../../hooks/useQuery";
+import { useStoreContext } from "../../contextApi/ContextApi";
 import { useNavigate } from "react-router-dom";
+import ShortenPopUp from "./ShortenPopUp";
 
 const DashboardLayout = () => {
   const { token } = useStoreContext();
   const navigate = useNavigate();
   const [shortenPopUp, setShortenPopUp] = useState(false);
 
-  const { data: totalClicks = [] } = useFetchTotalClicks(
-    token,
-    onError
-  );
+
+  //  const {isLoading, data: myShortenUrls, refetch } = useFetchMyShortUrls(token, onError)
+    
+    const {
+  isLoading: loader,
+  data: totalClicks = [],
+  refetch } = useFetchTotalClicks(token, onError);
+
 
   function onError() {
     navigate("/error");
@@ -38,7 +43,7 @@ const DashboardLayout = () => {
 
           <Graph
             graphData={
-              totalClicks.length > 0 ? totalClicks : dummyData
+              totalClicks
             }
           />
         </div>
@@ -60,6 +65,11 @@ const DashboardLayout = () => {
           </h2>
         </div>
       )}
+      <ShortenPopUp
+          refetch={refetch}
+          open={shortenPopUp}
+          setOpen={setShortenPopUp}
+        />
     </div>
   );
 };

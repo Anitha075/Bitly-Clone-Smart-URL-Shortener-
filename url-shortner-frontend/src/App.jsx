@@ -8,8 +8,7 @@ import Navbar from './components/Navbar';
 import RegisterPage from './components/RegisterPage';
 import LoginPage from './components/LoginPage';
 import Footer from './components/Footer';
-
-import Dashboard from "./Dashboard/DashboardLayout";
+import Dashboard from "./components/Dashboard/DashboardLayout";
 function App() {
   return (
     <Router>
