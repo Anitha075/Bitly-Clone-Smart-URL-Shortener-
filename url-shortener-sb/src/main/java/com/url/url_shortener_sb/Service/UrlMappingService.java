@@ -80,11 +80,32 @@ public class UrlMappingService {
         return null;
     }
     public Map<LocalDate, Long> getTotalClicksByUserAndDate(User user, LocalDate start, LocalDate end) {
-        List<UrlMapping> urlMappings = urlMappingRepository.findByUser(user);
-        List<ClickEvent> clickEvents = clickEventRepository.findByUrlMappingInAndClickDateBetween(urlMappings, start.atStartOfDay(), end.plusDays(1).atStartOfDay());
-        return clickEvents.stream()
-                .collect(Collectors.groupingBy(click -> click.getClickDate().toLocalDate(), Collectors.counting()));
 
+        List<UrlMapping> urlMappings = urlMappingRepository.findByUser(user);
+
+        System.out.println("USER = " + user.getUsername());
+        System.out.println("URL COUNT = " + urlMappings.size());
+
+        List<ClickEvent> clickEvents =
+                clickEventRepository.findByUrlMappingInAndClickDateBetween(
+                        urlMappings,
+                        start.atStartOfDay(),
+                        end.plusDays(1).atStartOfDay());
+
+        System.out.println("CLICK EVENTS FOUND = " + clickEvents.size());
+
+        for (ClickEvent click : clickEvents) {
+            System.out.println(
+                    "CLICK ID = " + click.getId()
+                            + " DATE = " + click.getClickDate()
+                            + " URL ID = " + click.getUrlMapping().getId()
+            );
+        }
+
+        return clickEvents.stream()
+                .collect(Collectors.groupingBy(
+                        click -> click.getClickDate().toLocalDate(),
+                        Collectors.counting()));
     }
 
     public UrlMapping getOriginalUrl(String shortUrl) {
