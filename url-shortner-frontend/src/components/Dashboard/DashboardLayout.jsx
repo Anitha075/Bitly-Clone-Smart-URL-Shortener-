@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Graph from './Graph'
 import { dummyData } from '../../dummyData/data'
 import { useStoreContext } from '../../contextApi/ContextApi'
@@ -6,14 +6,23 @@ import { useFetchMyShortUrls, useFetchTotalClicks } from '../../hooks/useQuery'
 import ShortenPopUp from './ShortenPopUp'
 import { FaLink } from 'react-icons/fa'
 import ShortenUrlList from './ShortenUrlList'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import Loader from '../Loader'
 
 const DashboardLayout = () => {
     // const refetch = false;
     const { token } = useStoreContext();
     const navigate = useNavigate();
-    const [shortenPopUp, setShortenPopUp] = useState(false);
+    const location = useLocation();
+const [shortenPopUp, setShortenPopUp] = useState(false);
+
+console.log("FRONTEND URL =", import.meta.env.VITE_REACT_FRONT_END_URL);
+console.log("BACKEND URL =", import.meta.env.VITE_BACKEND_URL);
+useEffect(() => {
+  if (location.state?.openCreateShortUrl) {
+    setShortenPopUp(true);
+  }
+}, [location.state]);
 
     // console.log(useFetchTotalClicks(token, onError));
 

@@ -47,14 +47,18 @@ export const useFetchTotalClicks = (token, onError) => {
       );
     },
 
-    select: (data) => {
-      const convertToArray = Object.keys(data.data || {}).map((key) => ({
-        clickDate: key,
-        count: data.data[key],
-      }));
+   select: (data) => {
 
-      return convertToArray;
-    },
+
+  const convertToArray = Object.keys(data.data || {}).map((key) => ({
+    clickDate: key,
+    count: data.data[key],
+  }));
+
+ 
+
+  return convertToArray;
+},
 
     enabled: !!token,
     staleTime: 5000,
