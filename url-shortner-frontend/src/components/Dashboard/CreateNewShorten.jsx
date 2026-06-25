@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { useStoreContext } from '../../contextApi/ContextApi';
 import { useForm } from 'react-hook-form';
-import { data } from 'autoprefixer';
 import TextField from '../TextField';
 import { Tooltip } from '@mui/material';
 import { RxCross2 } from 'react-icons/rx';
@@ -44,7 +43,7 @@ const CreateNewShorten = ({ setOpen, refetch }) => {
             });
           });
 
-          // await refetch();
+          await refetch();
           reset();
           setOpen(false);
     } catch (error) {

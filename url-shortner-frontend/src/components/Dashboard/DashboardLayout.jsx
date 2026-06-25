@@ -15,6 +15,7 @@ const DashboardLayout = () => {
     const navigate = useNavigate();
     const location = useLocation();
 const [shortenPopUp, setShortenPopUp] = useState(false);
+console.log(import.meta.env);
 
 console.log("FRONTEND URL =", import.meta.env.VITE_REACT_FRONT_END_URL);
 console.log("BACKEND URL =", import.meta.env.VITE_BACKEND_URL);
@@ -41,7 +42,7 @@ useEffect(() => {
         ): ( 
         <div className="lg:w-[90%] w-full mx-auto py-16">
             <div className=" h-96 relative ">
-                {totalClicks.length === 0 && (
+             {(!totalClicks || totalClicks.length === 0) && (
                      <div className="absolute flex flex-col  justify-center sm:items-center items-end  w-full left-0 top-0 bottom-0 right-0 m-auto">
                      <h1 className=" text-slate-800 font-serif sm:text-2xl text-[18px] font-bold mb-1">
                        No Data For This Time Period
@@ -63,7 +64,7 @@ useEffect(() => {
             </div>
 
             <div>
-              {!isLoading && myShortenUrls.length === 0 ? (
+           {!isLoading && (!myShortenUrls || myShortenUrls.length === 0) ? (
                 <div className="flex justify-center pt-16">
                   <div className="flex gap-2 items-center justify-center  py-6 sm:px-8 px-5 rounded-md   shadow-lg  bg-gray-50">
                     <h1 className="text-slate-800 font-montserrat   sm:text-[18px] text-[14px] font-semibold mb-1 ">
