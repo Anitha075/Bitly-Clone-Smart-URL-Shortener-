@@ -68,8 +68,7 @@ public class WebSecurityConfig {
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/urls/**").authenticated()
                         .requestMatchers("/{shortUrl}").permitAll()
-//                        .requestMatchers("/").permitAll()
-//                        .requestMatchers("/r/**").permitAll()
+//
                         .anyRequest().authenticated()
                 );
 
