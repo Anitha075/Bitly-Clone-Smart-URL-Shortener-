@@ -306,3 +306,13 @@ Add screenshots of:
 - Two-Factor Authentication
 - Rate Limiting
 - Custom Domains
+## 🚀 Live Demo
+
+🌐 **Frontend:**  
+https://celebrated-dolphin-510044.netlify.app
+
+⚙️ **Backend API:**  
+https://url-shortener-sb-v1.onrender.com
+
+🔗 **Custom Short URL Domain:**  
+https://url.awesomeus.shop
